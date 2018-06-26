@@ -1,0 +1,10 @@
+body {
+    text-align: center;
+}
+
+.jumbotron {
+    background-image: url("../images/bp.jpg");
+    background-repeat:no-repeat;
+    background-color: white;
+    font-family: 'Black Han Sans', sans-serif;
+}
