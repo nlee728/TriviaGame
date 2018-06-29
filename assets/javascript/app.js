@@ -1,4 +1,136 @@
-$(document).ready(function() {
+var panel = $("#game");
 
-   
+$(document).on("click", "#startbtn", function(event){
+  game.start();
 });
+
+$(document).on("click", "#done", function(event){
+  game.done();
+});
+
+var questions = [{
+	question: "Who preceded T'Challa as Black Panther?",
+	choices: ["Eric Killmonger", "Zuri", "T'Chaka", "Shurinoro"],
+	correctAnswer: "T'Chaka"
+
+}, {	
+
+	question: "What relation is Eric Killmonger to T'Challa?",
+	choices: ["brother", "cousin", "no relation", "nephew"],
+	correctAnswer: "cousin"
+
+}, {
+
+	question: "Where did the power of the Black Panther originate?",
+	choices: ["Bast", "Zeus", "Panthera pardus", "the queen mother"],
+	correctAnswer: "Bast"
+
+}, {
+
+	question: "What is the name of the elite all-women bodyguard squad commanded by Okoye?",
+	choices: ["Amazons", "Valkyrior", "Pantheras", "Dora Milaje"],
+	correctAnswer: "Dora Milaje"
+
+}, {
+
+	question: "What tribe does M'Baku lead?",
+	choices: ["Border Tribe", "The Jabari", "The Royal Family", "Kimoyo"],
+	correctAnswer: "The Jabari"
+
+}];
+
+var game = {
+	correct: 0,
+	incorrect: 0,
+	counter: 60,
+
+  countdown: function() {
+  	game.counter--;
+  	$("#counter-number").html(game.counter);
+
+  	if (game.counter === 0) {
+  		alert("TIME'S UP");
+  		game.done();
+
+  	}
+  },
+
+  start: function() {
+  	timer = setInterval(game.countdown, 1000);
+  	$('#subcontainer').prepend('<h5>Time Remaining: <span id="counter-number">60</span> Seconds</h5>');
+  	$("#startbtn").remove();
+
+  	for (var i = 0; i < questions.length; i++) {
+      panel.append('<h2>' + questions[i].question + '</h2>');
+      for (var j = 0; j < questions[i].choices.length; j++){
+        panel.append('<input type="radio" name ="question' + '-' + i + '"value="' + questions[i].choices[j] + '">' + questions[i].choices[j]);
+        }
+  		}
+  		panel.append("<button id='done'>DONE</button>");
+      
+  	},
+
+  	done: function() {
+
+  		$.each($("input[name='question-0']:checked"), function() {
+  			if ($(this).val() == questions[0].correctAnswer) {
+  				console.log(this);
+  				  game.correct++;
+  			} else {
+  				game.incorrect++;
+  			}
+
+  		});
+  		$.each($("input[name='question-1']:checked"), function() {
+  			if ($(this).val() == questions[1].correctAnswer) {
+  				console.log(this);
+  				game.correct++;
+  			} else {
+  				game.incorrect++;
+  			}
+
+  		});
+  		$.each($("input[name='question-2']:checked"), function() {
+  			if ($(this).val() == questions[2].correctAnswer) {
+  				console.log(this);
+  				game.correct++;
+  			} else {
+  				game.incorrect++;
+  			}
+
+  		});
+  		$.each($("input[name='question-3']:checked"), function() {
+  			if ($(this).val() == questions[3].correctAnswer) {
+  				console.log(this);
+  				game.correct++;
+  			} else {
+  				game.incorrect++;
+  			}
+
+  		});
+  		$.each($("input[name='question-4']:checked"), function() {
+  			if ($(this).val() == questions[4].correctAnswer) {
+  				console.log(this);
+  				game.correct++;
+  			} else {
+  				game.incorrect++;
+  			}
+
+  		});
+
+  		this.results();
+  	},
+
+
+  	  results:function() {
+  	  	clearInterval(timer);
+
+  	  	$("#subcontainer h2").remove();
+  	   panel.html("<h2>You're Done!</h2>");
+  	   panel.append("<h3>You got " + this.correct + " correct! </h3>");
+  	   panel.append("<h3>You got " + this.incorrect + " wrong. </h3>");
+  	   panel.append("<h3>You skipped " + (questions.length - (this.incorrect + this.correct)) + " questions. </h3>");
+  	  
+  	  }
+
+  };
