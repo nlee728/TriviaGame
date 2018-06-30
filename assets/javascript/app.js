@@ -49,7 +49,7 @@ var game = {
   	$("#counter-number").html(game.counter);
 
   	if (game.counter === 0) {
-  		alert("TIME'S UP");
+  		alert("Out of time! Try again!");
   		game.done();
 
   	}
@@ -57,16 +57,16 @@ var game = {
 
   start: function() {
   	timer = setInterval(game.countdown, 1000);
-  	$('#subcontainer').prepend('<h5>Time Remaining: <span id="counter-number">60</span> Seconds</h5>');
+  	$('#subcontainer').prepend('<h5><span id="counter-number">60</span> seconds remaining</h5><br>');
   	$("#startbtn").remove();
 
   	for (var i = 0; i < questions.length; i++) {
-      panel.append('<h2>' + questions[i].question + '</h2>');
+      panel.append('<h6>' + questions[i].question + '</h6>');
       for (var j = 0; j < questions[i].choices.length; j++){
-        panel.append('<input type="radio" name ="question' + '-' + i + '"value="' + questions[i].choices[j] + '">' + questions[i].choices[j]);
-        }
+		panel.append('<input type="radio" name ="question' + '-' + i + '"value="' + questions[i].choices[j] + '">' + questions[i].choices[j] + '<br>');
+		}
   		}
-  		panel.append("<button id='done'>DONE</button>");
+  		panel.append("<br><br><button id='done'>DONE</button>");
       
   	},
 
@@ -125,8 +125,8 @@ var game = {
   	  results:function() {
   	  	clearInterval(timer);
 
-  	  	$("#subcontainer h2").remove();
-  	   panel.html("<h2>You're Done!</h2>");
+  	  	$("#subcontainer h5").remove();
+  	   panel.html("<h6>Quiz Complete</h6>");
   	   panel.append("<h3>You got " + this.correct + " correct! </h3>");
   	   panel.append("<h3>You got " + this.incorrect + " wrong. </h3>");
   	   panel.append("<h3>You skipped " + (questions.length - (this.incorrect + this.correct)) + " questions. </h3>");
